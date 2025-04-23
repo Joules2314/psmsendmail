@@ -7,6 +7,7 @@ use App\Models\Email;
 use App\Models\EmailLog;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class EmailController extends Controller
 {
@@ -42,7 +43,28 @@ class EmailController extends Controller
                 'user_name'=> 'required|string',
                 'system_name'=> 'required|string',
             ]);
-    
+            
+            $savedattachments = [];
+
+            if(!empty($validated['attachments'])) {
+                foreach ($validated['attachments'] as $attachments) {
+                    $fileName = $attachments['file_name'];
+                    $fileData = base64_decode($attachments['file_data']);
+
+                    $uniquename = uniqid() . '_' . $fileName;
+                    $filePath = 'public/attachments/' . $uniquename;
+
+                    Storage::put($filePath, $fileData);
+
+                    $savedattachments = [
+                        'file_name' => $fileName,
+                        'path' => $filePath,
+                    ];
+                }
+
+                $validated['attachments'] = $savedattachments;
+            }
+
             $email = Email::create($validated);
 
             EmailLog::create([
