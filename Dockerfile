@@ -39,4 +39,8 @@ WORKDIR /var/www
 # Copy custom configurations PHP
 COPY docker/php/custom.ini /usr/local/etc/php/conf.d/custom.ini
 
+# Para imagens baseadas no PHP oficial
+RUN docker-php-ext-install pdo pdo_mysql
+
+
 USER $user

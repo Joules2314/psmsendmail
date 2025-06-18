@@ -68,13 +68,13 @@ class EmailController extends Controller
             $email = Email::create($validated);
 
             EmailLog::create([
-                'status'=> 'success',
+                'status'=> 'sent',
                 'log_message'=> 'Email enviado e salvo com sucesso.',
                 'email_id' => $email->id,
             ]);
 
             return response()->json([
-                'status'=> 'success',
+                'status'=> 'sent',
                 'message'=> 'Email enviado e salvo com sucesso.',
                 'email_id'=> $email->id,
             ], 200);   
@@ -86,7 +86,7 @@ class EmailController extends Controller
                 'email_id'=>null,
                 'status'=> 'error',
                 'log_message' =>'Erro de validação nos dados de e-mail: ' . json_encode($errors),
-            ]);
+            ], 422);
 
             return response()->json([
                 'status'=>'error',
@@ -102,7 +102,7 @@ class EmailController extends Controller
             ]);
 
             return response()->json([
-                'status' => 'error',
+                'status' => 'Internal Error',
                 'message' => 'Falha ao enviar e-mail.',
                 'error' => $e->getMessage(),
             ], 500);
