@@ -32,7 +32,7 @@ return [
     ],
 
     'sendmail' => [
-        'api_token' => env('SENDMAIL_API_TOKEN'),   
+        'api_token' => env('SENDMAIL_API_TOKEN'),
     ],
 
 ];

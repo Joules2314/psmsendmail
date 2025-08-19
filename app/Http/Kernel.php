@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http;
+//namespace App\Http\Middleware;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -39,8 +40,8 @@ class Kernel extends HttpKernel
      * Middleware individuais que podem ser usados em rotas específicas.
      */
     protected $routeMiddleware = [
-        //'auth' => \App\Http\Middleware\Authenticate::class,
-        //'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'auth' => \App\Http\Middleware\Authenticate::class,
+        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'check.api.token' => \App\Http\Middleware\CheckApiToken::class,
 

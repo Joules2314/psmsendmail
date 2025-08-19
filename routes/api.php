@@ -17,3 +17,8 @@ Route::middleware('check.api.token')->group(function () {
         ->name('api.sendmail');
 }); 
 
+
+
+Route::middleware('check.api.token')->get('/teste-token', function () {
+    return response()->json(['status' => 'OK']);
+});
