@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text("cc")->nullable();
             $table->text("bcc")->nullable();
             $table->text("body");
-            $table->text("attachments");
+            $table->text("attachments")->nullable();
             $table->bigInteger("user_id")->references("id")->on("users");
             $table->string("user_name");
             $table->string("system_name");
