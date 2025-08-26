@@ -21,7 +21,7 @@ class SendMailApi extends Mailable
 
     public function __construct(string $subject, string $body, string $userName, string $systemName, array $attachments = [])
     {
-        $this->subjectText = $su    bject;
+        $this->subjectText = $subject;
         $this->bodyText = $body;
         $this->userName = $userName;
         $this->systemName = $systemName;
