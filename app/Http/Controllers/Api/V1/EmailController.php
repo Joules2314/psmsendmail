@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Mail\SendMailApi;
 use App\Http\Controllers\Controller;
 use App\Models\Email;
 use App\Models\EmailLog;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
 
 class EmailController extends Controller
 {
@@ -24,6 +26,8 @@ class EmailController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
+
+    
     {
         try {
 
@@ -67,6 +71,17 @@ class EmailController extends Controller
 
             $email = Email::create($validated);
 
+            
+
+            Mail::to($validated['to'])
+                ->send(new SendMailApi(
+                    $validated['subject'],
+                    $validated['body'],
+                    $validated['user_name'],
+                    $validated['system_name'],
+                    $validated['attachments'] ?? []
+                ));
+                
             EmailLog::create([
                 'status'=> 'success',
                 'log_message'=> 'Email enviado e salvo com sucesso.',
